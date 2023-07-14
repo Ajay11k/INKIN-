@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Lyrical Video Player</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #CBB682;
+        }
+
+        h1 {
+            margin-top: 50px;
+        }
+
+        p {
+            margin: 20px auto;
+            width: 500px;
+            line-height: 1.5;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #554508;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            text-decoration: none;
+        }
+
+        .download-button{
+            background-color: #000;
+            color: white;
+            width: 160px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 4px solid rgb(127, 87, 17);
+            border-radius: 40px;
+
+
+        }
+
+        .button:hover {
+            background-color: #4f4b3b;
+        }
+
+        #video-container {
+            margin-top: 10px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        #video-player {
+            display: none;
+            width: 100%;
+            height: auto;
+        }
+
+        .upper {
+            position: relative;
+
+            background-color: #372502;
+            /* Adjust container width as needed */
+            width: 100%;
+            height: 50vh;
+            /* Adjust container height as needed */
+            background-image: url(/static/Images/sheet-music-song-lyrics-headphones-music-ss-1920-800x450.jpg);
+            /* Replace with the path to your image */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .footer {
+            width: 100%;
+            height: 40vh;
+            background-color: #E9DBBD;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(28, 22, 11, 0.8);
+            /* Adjust the opacity (0.5 represents 50% transparency) */
+        }
+
+        .download-button {
+            margin-top: 40px;
+            margin-bottom: 65px;
+            
+        }
+    </style>
+    <script>
+        function playVideo() {
+            var videoPlayer = document.getElementById("video-player");
+            videoPlayer.style.display = "block";
+        }
+    </script>
+</head>
+
+<body>
+    <div class="upper">
+
+        <div class="overlay"></div>
+
+
+    </div>
+    <h1>Lyrical Video Player</h1>
+
+    <p>
+        Welcome to the Lyrical Video Player. Click the button below to play the lyrical video.
+    </p>
+
+    <button class="button download-button" onclick="playVideo()">Play Video</button>
+
+    <div id="video-container">
+        <video id="video-player" controls>
+            <source src="/static/final2_lyrical_video.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    <a class="button download-button" href="/static/final2_lyrical_video.mp4" download >Download Video</a>
+    <div class="footer"></div>
+
+</body>
+
+</html>

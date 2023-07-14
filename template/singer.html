@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Song Selection</title>
+  <style>
+    h2 .red-text {
+    color: white;
+  }
+    body {
+      background-color: #000;
+      color:aliceblue;
+    }
+
+    .upper {
+            position: relative;
+
+            background-color: #372502;
+            /* Adjust container width as needed */
+            width: 100%;
+            height: 50vh;
+            /* Adjust container height as needed */
+            background-image: url(/static/Images/sheet-music-song-lyrics-headphones-music-ss-1920-800x450.jpg);
+            /* Replace with the path to your image */
+            background-size: cover;
+            background-position: center;
+        }
+        .overlay {
+          position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(28, 22, 11, 0.8);
+            /* Adjust the opacity (0.5 represents 50% transparency) */
+        }
+
+    .lower {
+      padding: 20px;
+      background-color: rgb(105, 81, 61);
+    }
+
+    #submitButton {
+      margin-top: 30px;
+      height: 60px;
+      width: 85px;
+      background-color: #382208;
+      border-radius: 40px;
+      border-color: #382208;
+      color: bisque;
+      cursor: pointer;
+
+    }
+    form{
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .prompt {
+      height: 40px;
+      width: 520px;
+      background-color: #8888;
+      border-radius: 30px;
+      border-color: #000;
+      font-size: 20px;
+    }
+
+    .container {
+      min-height: 70vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-bottom: 30px;
+    }
+   
+  </style>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+
+  <div class="upper">
+    <div class="overlay"></div>
+
+
+
+  </div>
+  <div class="container">
+    {% if error %}
+    <p>{{ error }}</p>
+  {% endif %}
+    <form id="songForm" action="/song/process_song" method="GET">
+      <h2 style="color: white">Select Language:</h2>
+      <select class="prompt" id="languageSelect" name="language">
+        <option class="prompt" value="">Select Language</option>
+        <option class="prompt" value="en">English</option>
+        <option class="prompt" value="ko">Korean</option>
+        <option class="prompt" value="hi">Hindi</option>
+        <option class="prompt" value="es">Spanish</option>
+      </select>
+
+
+      <h2 style="color: white">Select Singer:</h2>
+      <select class="prompt" id="singerSelect" name="singer" disabled>
+        <option value="">Select Singer</option>
+      </select>
+
+      <h2 style="color: white">Number of Songs:</h2>
+      <input type="number" class="prompt" id="numSongsInput" name="numSongs" min="1">
+
+      <h2 style="color: white">Titles (comma-separated):</h2>
+      <input type="text" class="prompt" id="titlesInput" name="titles">
+
+      <button type="submit" id="submitButton" disabled>Submit</button>
+    </form>
+  </div>
+  <div class="lower">
+    <h2>inkin':</h2>
+    <p>
+      inkin' is a creative platform that allows you to generate unique songs and poems
+      based on your preferences. Whether you're looking for inspiration, want to explore your artistic side,
+      or simply enjoy the beauty of words, this generator has something for you.
+    </p>
+    <p>
+      With just a click of a button, you can unleash your creativity and discover new verses that
+      resonate with your emotions. Choose between generating a banging song or a heartfelt poem, and let the
+      magic of words unfold.
+    </p>
+    <p>
+      Get ready to embark on a poetic journey and express yourself in ways you never imagined. Let inkin' be your companion in creating meaningful and memorable artistic pieces.
+    </p>
+  </div>
+  <script>
+    $(document).ready(function () {
+      
+      
+      $('#languageSelect').change(function () {
+        var selectedLanguage = $(this).val();
+        if (selectedLanguage !== "") {
+          $('#singerSelect').removeAttr('disabled');
+          // Call a function to populate the singer dropdown based on the selected language
+          populateSingers(selectedLanguage);
+        } else {
+          $('#singerSelect').attr('disabled', true);
+          $('#singerSelect').empty();
+          $('#singerSelect').append($('<option>').val('').text('Select Singer'));
+        }
+      });
+
+      $('#singerSelect').change(function () {
+        var selectedSinger = $(this).val();
+        var numSongs = $('#numSongsInput').val();
+        var titles = $('#titlesInput').val();
+        if (selectedSinger !== "" && numSongs !== "" && titles !== "") {
+          $('#submitButton').removeAttr('disabled');
+        } else {
+          $('#submitButton').attr('disabled', true);
+        }
+      });
+
+      $('#numSongsInput').on('input', function () {
+        var selectedSinger = $('#singerSelect').val();
+        var numSongs = $(this).val();
+        var titles = $('#titlesInput').val();
+        if (selectedSinger !== "" && numSongs !== "" && titles !== "") {
+          $('#submitButton').removeAttr('disabled');
+        } else {
+          $('#submitButton').attr('disabled', true);
+        }
+      });
+
+      $('#titlesInput').on('input', function () {
+        var selectedSinger = $('#singerSelect').val();
+        var numSongs = $('#numSongsInput').val();
+        var titles = $(this).val();
+        if (selectedSinger !== "" && numSongs !== "" && titles !== "") {
+          $('#submitButton').removeAttr('disabled');
+        } else {
+          $('#submitButton').attr('disabled', true);
+        }
+      });
+
+      function populateSingers(language) {
+        // You can make an AJAX request here to fetch the list of singers based on the selected language
+        // For simplicity, let's assume we have predefined singer lists for each language
+        var singers;
+        switch (language) {
+          case 'en':
+            singers = ['ADELE', 'EMINEM','LADYGAGA', 'RIHANNA'];
+            break;
+          case 'ko':
+            singers = ['BTS', 'IU', 'SND','TWICE'];
+            break;
+          case 'hi':
+            singers = ['ARIJITSINGH','KUMARSANU','LATAMANGESHKAR', 'SHREYAGHOSHAL'];
+            break;
+          case 'es':
+            singers = ['BADBUNNY', 'Singer N', 'Singer O'];
+            break;
+          default:
+            singers = [];
+            break;
+        }
+
+        // Clear the singer dropdown and populate it with the singers for the selected language
+        $('#singerSelect').empty();
+        $('#singerSelect').append($('<option>').val('').text('Select Singer'));
+        singers.forEach(function (singer) {
+          $('#singerSelect').append($('<option>').val(singer).text(singer));
+        });
+      }
+    });
+  </script>
+</body>
+
+</html>

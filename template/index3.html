@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/static/css/style1.css" />
+    <title>Browser</title>
+</head>
+
+<body>
+    <input type="hidden" class="songlyrics" value="{{ text }}">
+    <div class="upper">
+        
+            <div class="overlay"></div>
+        
+          
+    </div>
+    <div class="container">
+        <button class="back">back</button>
+        <div class="slider-container">
+
+            <div class="slider-track">
+                <div class="slider-slide" data-name="1">
+                    <div class="card">
+                        <div class="overlay2"></div> 
+                        <div class="image-content">
+                            <!-- <span class="overlay"></span>-->
+                            <div class="card-image">
+                                <img src="/static/Images/bg1.jpg" alt="" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">1</h2>
+                            <p class="description"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-slide" data-name="2">
+                    <div class="card">
+                        <div class="overlay2"></div> 
+                        <div class="image-content">
+                            <!-- <span class="overlay"></span>-->
+                            <div class="card-image">
+                                <img src="/static/Images/bg2.jpg" alt="" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">2</h2>
+                            <p class="description"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-slide" data-name="3">
+                    <div class="card">
+                        <div class="overlay2"></div> 
+                        <div class="image-content">
+                            <!-- <span class="overlay"></span>-->
+                            <div class="card-image">
+                                <img src="/static/Images/bg3.jpg" alt="" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">3</h2>
+                            <p class="description"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-slide" data-name="4">
+                    <div class="card">
+                        <div class="overlay2"></div> 
+                        <div class="image-content">
+                            <!-- <span class="overlay"></span>-->
+                            <div class="card-image">
+                                <img src="/static/Images/bg4.jpg" alt="" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">4</h2>
+                            <p class="description"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-slide" data-name="5">
+                    <div class="card">
+                        <div class="overlay2"></div> 
+                        <div class="image-content">
+                            <!-- <span class="overlay"></span>-->
+                            <div class="card-image">
+                                <img src="/static/Images/bg5.jpg" alt="" class="card-img">
+                            </div>
+                        </div>
+                        <div class="card-content">
+                            <h2 class="name">5</h2>
+                            <p class="description"></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="slider-slide" data-name="6">
+                    <div class="card ">
+                        <div class="overlay2"></div> 
+                        <div class="image-content">
+                            <!-- <span class="overlay"></span>-->
+                          <div class="card-image">
+                            <img src="/static/Images/bg6.jpg" alt="" class="card-img"> 
+                          </div>
+                        </div>
+                        <div class="card-content">  
+                            <h2 class="name">6</h2>
+                          <p class="description"></p>
+                       </div> 
+                    </div>
+                </div>
+                <!-- Add more slides here -->
+            </div>
+        </div>
+        <button class="next">next</button>
+
+
+
+
+        <!-- <button class="next">next</button> -->
+
+    </div>
+    <div class="poetry-image" id="mydiv" >
+        
+        <h2> here is your generated image </h2>
+        <button id="download">Download</button>
+        <div class="poetry-image-holder">
+        <img src=" " alt="" class="gen-image">
+        </div>
+        
+    </div>
+    <div class="footer"></div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const sliderContainer = document.querySelector('.slider-container');
+            const sliderTrack = document.querySelector('.slider-track');
+            const sliderSlides = Array.from(document.querySelectorAll('.slider-slide'));
+            const prevButton = document.querySelector('.back');
+            const nextButton = document.querySelector('.next');
+            const downloadButton=document.querySelector('#download');
+            const slideWidth = sliderContainer.clientWidth / 3;
+            let currentSlideIndex = 0;
+
+            // Clone first three slides and append to the end for looping
+            const clonedSlides = sliderSlides.slice(0, 3).map(slide => slide.cloneNode(true));
+            clonedSlides.forEach(clonedSlide => sliderTrack.appendChild(clonedSlide));
+
+            // Set initial slide position
+            updateSliderPosition();
+
+            // Update slide position on previous button click
+            prevButton.addEventListener('click', function () {
+                currentSlideIndex = (currentSlideIndex - 1 + sliderSlides.length) % sliderSlides.length;
+                updateSliderPosition();
+            });
+
+            // Update slide position on next button click
+            nextButton.addEventListener('click', function () {
+                currentSlideIndex = (currentSlideIndex + 1) % sliderSlides.length;
+                updateSliderPosition();
+            });
+
+            function updateSliderPosition() {
+                const trackPosition = -slideWidth * currentSlideIndex;
+                sliderTrack.style.transform = `translateX(${trackPosition}px)`;
+
+            }
+            downloadButton.addEventListener('click', function() {
+                const link = document.createElement('a');
+                const image=document.querySelector('.gen-image');
+                const imageUrl=image.src;
+                link.href = imageUrl;
+                link.download = 'generated-image.jpg';
+                link.click();
+              });
+
+            // Double-click event on slide
+            sliderSlides.forEach((slide, index) => {
+                slide.addEventListener('dblclick', function() {
+                    const slideName = this.dataset.name;
+                    const genImageElement = document.querySelector('.gen-image');
+                    const songLyricsInput=document.querySelector('.songlyrics')
+                    const lyricsValue = songLyricsInput.value;
+                    genImageElement.style.display = 'none';
+                    genImageElement.src = '';
+                    
+                    var myDiv = document.getElementById("mydiv");
+  var yOffset = myDiv.getBoundingClientRect().top + window.pageYOffset;
+  setTimeout(function() {
+    window.scrollTo({ top: yOffset, behavior: "smooth" });
+  }, 3000);
+
+                    
+                    // Call Flask endpoint with slideName as a parameter
+                    fetch('/poetry/poetry_image?slideName=' + slideName + '&lyricsValue=' + lyricsValue, {
+                        method: 'GET'
+                    })
+                    
+                    .then(response => response.json())
+                    .then(data => {
+                        const imageUrl = data.image_url;
+                        console.log(data.image_Url);
+                        const genImageElement = document.querySelector('.gen-image');
+                        genImageElement.src = imageUrl;
+                        genImageElement.style.display = 'block';
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                    });
+                    downloadButton.style.display='block';
+                });
+            })
+
+
+           
+        });
+
+
+
+    </script>
+</body>
+
+</html>

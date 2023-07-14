@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Song List</title>
+	<style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: #f6f6f6;
+			font-family: Arial, sans-serif;
+			font-size: 16px;
+			color: #f9e498;
+			background-color: black;
+		}
+
+		.container {
+			max-width: 800px;
+			margin: 0 auto;
+			padding: 20px;
+			padding-top:40px;
+			min-height: 50vh;
+			
+		}
+
+		h1 {
+			font-size: 36px;
+			color: #a09595;
+			margin-top: 0;
+			text-align: center;
+		}
+
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+			
+		}
+
+		li {
+			position: relative; /* To position the delete button */
+			margin: 10px 0;
+			padding: 10px;
+			background-color: #69513d;
+			box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+			border-radius: 5px;
+			transition: all 0.3s ease;
+			font-size: 24px;
+		}
+
+		li:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+		}
+		
+
+		li a {
+			color: #222;
+			text-decoration: none;
+			font-size: 24px;
+		}
+	
+		.delete-button {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+			border: none;
+			background-color: #000000;
+			border:3px solid #372502 ;
+			color: #fff;
+			padding: 5px 10px;
+			border-radius: 3px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+		}
+
+		.delete-button:hover {
+			background-color: #e53c3c;
+			border-color:  #000000;
+		}
+		.upper {
+            position: relative;
+
+            background-color: #372502;
+            /* Adjust container width as needed */
+            width: 100%;
+            height: 50vh;
+            /* Adjust container height as needed */
+            background-image: url(/static/Images/sheet-music-song-lyrics-headphones-music-ss-1920-800x450.jpg);
+            /* Replace with the path to your image */
+            background-size: cover;
+            background-position: center;
+        }
+        .overlay {
+          position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(28, 22, 11, 0.8);
+            /* Adjust the opacity (0.5 represents 50% transparency) */
+        }
+
+    .lower {
+      padding: 20px;
+      background-color: rgb(105, 81, 61);
+    }
+	</style>
+</head>
+<body>
+	<div class="upper">
+		<div class="overlay"></div>
+	
+	
+	
+	  </div>
+	<div class="container">
+		<h1>YOUR CREATION</h1>
+		<ul>
+			{% for song in songs %}
+			<li>
+                <div class="song-title">
+                    <a href="{{ url_for('show_list.fetch', song_id=song.id) }}" style="color: #000000;font-weight: bold; margin-right:20px;">Album {{ song.id }}</a>
+					{{song.genre}}:{{song.no_song}}
+					<form method="post" action="{{ url_for('show_list.delete', song_id=song.id) }}">
+                        <input type="hidden" name="song_id" value="{{ song.id }}">
+                        <button type="submit" class="delete-button">Delete</button>
+                    </form>
+                </div>
+				
+                <div class="song-first-line" style="font-size: 16px; font-weight:bold;color:#222">
+                    {{ titles[loop.index0] }}
+                </div>
+            </li>
+			{% endfor %}
+		</ul>
+	</div>
+	<div class="lower" style="color: #000000;">
+		<h2>inkin':</h2>
+		<p>
+		  inkin' is a creative platform that allows you to generate unique songs and poems
+		  based on your preferences. Whether you're looking for inspiration, want to explore your artistic side,
+		  or simply enjoy the beauty of words, this generator has something for you.
+		</p>
+		<p>
+		  With just a click of a button, you can unleash your creativity and discover new verses that
+		  resonate with your emotions. Choose between generating a banging song or a heartfelt poem, and let the
+		  magic of words unfold.
+		</p>
+		<p>
+		  Get ready to embark on a poetic journey and express yourself in ways you never imagined. Let inkin' be your companion in creating meaningful and memorable artistic pieces.
+		</p>
+	  </div>
+</body>
+</html> 

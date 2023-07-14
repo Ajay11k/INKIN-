@@ -1,0 +1,152 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HomePage</title>
+    <link rel="stylesheet" href="/static/css/homepage.css">
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</head>
+
+<body>
+    <nav>
+        <ul class="navbar">
+            <li><a href="#" class="tab-link active" data-tab="home" style="color: #d79727;">Home</a></li>
+            <li><a href="#" class="tab-link" data-tab="about" style="color: #d79727;">About</a></li>
+            <li><a href="#" class="tab-link" data-tab="contact" style="color: #d79727;">Contact</a></li>
+
+        </ul>
+    </nav>
+    <div class="upper">
+        <div class="overlay"></div>
+
+    </div>
+
+    <div class="tab-content active" id="home">
+        <h2 style="color: white">EXPLORE INKIN' </h2>
+        <p>
+            Inkin' combines the magic of poetry and the cutting-edge technology of artificial intelligence to ignite
+            your
+            creativity. Our website leverages the power of AI algorithms to generate personalized verses for songs and
+            poems,
+            catering to your unique preferences and creative needs. </p>
+
+        <div class="button-formatting">
+            <button class="buttons" id="mybutton">Let's begin</button>
+            <button class="buttons" id="show">Your creations</button>
+            <button class="buttons" id="feedback">Feedback</button>
+        </div>
+    </div>
+
+
+    <div class="tab-content" id="about">
+        <h2>Get to know more about our AI based platform for poem and song generation</h2>
+        <p>At Inkin', we believe that poetry and songwriting are not just about the power of words, but also the beauty
+            of
+            visuals. That's why our website goes beyond generating compelling verses - we also provide you with stunning
+            visuals that enhance and complement your poems and songs.</p>
+
+        <p>When you create a verse on Inkin', our platform offers a range of visual options to bring your words to life.
+            Explore our vast library of captivating images, mesmerizing illustrations, and breathtaking photographs.
+            Each
+            visual is carefully curated to resonate with the emotions and themes of your creations, adding an extra
+            layer of
+            depth and inspiration.</p>
+
+        <p>Whether you're crafting a romantic poem or a catchy song, our visual collection spans a multitude of genres
+            and
+            styles. From vibrant landscapes to abstract artwork, we have visuals that suit every mood and aesthetic.
+            Choose
+            the perfect image that captures the essence of your piece and watch as your words intertwine seamlessly with
+            the
+            accompanying visual.
+
+            Inkin' also provides customization features, allowing you to fine-tune the visual presentation of your
+            verses.
+            Adjust the color scheme, apply filters, or add text overlays to create a visually cohesive and impactful
+            composition. The intuitive editing tools on our platform make it easy to bring your artistic vision to life,
+            even
+            if you're not a design expert.</p>
+        <p>And the best part? You can download your finalized verses with visuals in high-resolution format. Share them
+            on
+            social media, include them in presentations, or print them as stunning wall art. The possibilities are
+            endless,
+            and the visual impact will leave a lasting impression on both you and your audience.</p>
+        <p>Inkin' fosters a community that appreciates the synergy between words and visuals. Connect with other
+            artists,
+            exchange ideas, and collaborate on projects that combine the power of language and imagery. Together, we can
+            create a tapestry of artistic expression that transcends boundaries.</p>
+        <p>Step into a world where words and visuals intertwine harmoniously with Inkin'. Let your creativity soar as
+            you
+            witness the transformative effect of combining powerful verses with breathtaking visuals. Join our vibrant
+            community today and elevate your poetry and songwriting to new heights with Inkin'!</p>
+    </div>
+
+    <div class="tab-content" id="contact">
+        <h2>Contact Us</h2>
+        <p>If you have any questions, feedback, or inquiries, feel free to get in touch with us:</p>
+        <ul>
+            <li>Email: #########@gmail.com</li>
+            <li>Email: ###########@gmail.com</li>
+            <li>Email: ###########@gmail.com</li>
+
+            <li>Phone: +1 9643729999</li>
+        </ul>
+    </div>
+    <div class="lower">
+        <h2>inkin':</h2>
+        <p>
+            inkin' is a creative platform that allows you to generate unique songs and poems
+            based on your preferences. Whether you're looking for inspiration, want to explore your artistic side,
+            or simply enjoy the beauty of words, this generator has something for you.
+        </p>
+        <p>
+            With just a click of a button, you can unleash your creativity and discover new verses that
+            resonate with your emotions. Choose between generating a banging song or a heartfelt poem, and let the
+            magic of words unfold.
+        </p>
+        <p>
+            Get ready to embark on a poetic journey and express yourself in ways you never imagined. Let inkin' be your
+            companion in creating meaningful and memorable artistic pieces.
+
+        </p>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $(".tab-content:first").addClass("active");
+      
+            $(".tab-link").click(function () {
+              var tabId = $(this).attr("data-tab");
+              $(".tab-link").removeClass("active");
+              $(".tab-content").removeClass("active");
+              $(this).addClass("active");
+              $("#" + tabId).addClass("active");
+      
+              // Scroll to the tab content
+              $('html, body').animate({
+                scrollTop: $("#" + tabId).offset().top
+              }, 500);
+            });
+      
+      
+            $("#mybutton").click(function () {
+                window.location.href = "/poetry/select";  // Replace with the URL of your Flask endpoint
+            });
+            $("#feedback").click(function () {
+                window.location.href = "/review/feedback";  // Replace with the URL of your Flask endpoint
+            });
+            $("#show").click(function () {
+                window.location.href = "/show_list/show";  // Replace with the URL of your Flask endpoint
+            });
+
+        });
+    </script>
+
+
+</body>
+
+</html>

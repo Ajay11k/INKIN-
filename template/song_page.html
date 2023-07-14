@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="/static/css/song.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat&family=Sacramento&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Montserrat&family=Sacramento&display=swap" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body class="container">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img class="navbar-logo" src="/static/pngwing.com (8).png" alt="logo">
+
+        </div>
+        <div class="navbar-right">
+            <form action="/song/regenerate_song" method="POST">
+                <input type="hidden" name="num_songs" value="{{ num_songs }}">
+                <input type="hidden" name="data" class="song_json" value="{{ song_json }}">
+                <button type="submit" class="navbar-button">Regenerate</button>
+            </form>
+            <form action="/song/save" method="POST">
+                <input type="hidden" name="num_songs" value="{{ num_songs }}">
+
+                <input type="hidden" name="data" class="song_json" value="{{ song_json }}">
+
+                <input type="hidden" name="genre" value="song">
+                <button {% if flag %}disabled{% endif %} type="submit" class="navbar-button">Save</button>
+            </form>
+            <form action="/song/download_song" method="POST">
+
+                <input type="hidden" name="data" class="song_json" value="{{ song_json }}">
+                <button type="submit" class="navbar-button">Download</button>
+            </form>
+        </div>
+    </nav>
+    <input type="hidden" class="song_json" value="{{ song_json }}">
+
+    <input type="hidden" class="songlyrics" value="{{ songs }}">
+    <div class="upper">
+        
+            <img src="/static/black_gold.jpg" class="cover-image" alt="Image">
+          
+        <!-- <div class="overlay"></div> -->
+    </div>
+    <div class="ribon"></div>
+
+    <!-- Add song divs dynamically -->
+    {% for song in songs %}
+    <div class="song" id="{{ song.id }}">
+        <input  type="hidden" class="language" value="{{ song.language }}">
+        
+        <div class="lyrics-container{{ loop.index }} lyrics"></div>
+        <br>
+        <div class="allbutton">
+            <button class="transliterate-button navbar-button bn">Transliterate</button>
+        <button class="translate-button navbar-button bn">Translate</button>
+        
+        <form action="/song/generate_video" method="POST">
+            <input type="hidden" name="songid" value="{{ song.id }}">
+            <input  type="hidden" class="language" name="language" value="{{ song.language }}">
+
+            <input type="hidden" name="data" class="song_json" value="{{ song_json }}">
+            <button type="submit" class="navbar-button bn">show_video</button>
+        </form>
+        <form action="/song/generate_psong" method="POST">
+            <input type="hidden" name="id" value="{{ song.id }}">
+            <input type="hidden" name="data" class="song_json" value="{{ song_json }}">
+            <input type="hidden" name="num_songs" value="{{ num_songs }}">
+            <button type="submit" class="navbar-button bn">generate again</button>
+        </form>
+        </div>
+        
+    </div>
+    {% endfor %}
+
+    
+
+
+    <div class="ribon"></div>
+
+    </div>
+    <!-- <div id="spinner" class="spinner"></div> -->
+    <div class="lower">
+        <h2>inkin':</h2>
+        <p>
+          inkin' is a creative platform that allows you to generate unique songs and poems
+          based on your preferences. Whether you're looking for inspiration, want to explore your artistic side,
+          or simply enjoy the beauty of words, this generator has something for you.
+        </p>
+        <p>
+          With just a click of a button, you can unleash your creativity and discover new verses that
+          resonate with your emotions. Choose between generating a banging song or a heartfelt poem, and let the
+          magic of words unfold.
+        </p>
+        <p>
+          Get ready to embark on a poetic journey and express yourself in ways you never imagined. Let inkin' be your
+          companion in creating meaningful and memorable artistic pieces.
+        </p>
+      </div>
+
+    <!-- Add other songs if needed -->
+
+    <script>
+        $(document).ready(function () {
+            var array = JSON.parse($('.song_json').val());
+            function showSpinner() {
+                $('#spinner').show();
+              }
+              
+              // Hide the spinner loader
+              function hideSpinner() {
+                $('#spinner').hide();
+              }
+              
+              hideSpinner();
+
+            for (var i = 0; i < array.length; i++) {
+                var lyrics = array[i].song;
+                var songid = i + 1;
+                var lyricsHTML = generateLyricsHTML(lyrics, songid);
+                $('.lyrics-container' + (i + 1)).html(lyricsHTML);
+            }
+
+
+
+
+            // Function to generate the lyrics HTML
+            function generateLyricsHTML(lyrics, songid) {
+                var html = '';
+                html += '<h1>' + array[songid - 1].title + '</h1>';
+                for (var i = 0; i < lyrics.length; i++) {
+                    if (i == 0 || i == 2) {
+                        html += '<h3>VERSE</h3><br>';
+
+                    } else if (i == 1 || i == 3 || i == 5) {
+                        html += '<h3>CHORUS</h3><br>';
+
+                    } else {
+                        html += '<h3>BRIDGE</h3><br>';
+
+                    }
+                    for (var j = 0; j < lyrics[i].length; j++) {
+                        html += '<p>' + lyrics[i][j] + '</p>';
+                    }
+                    html += '<br>';
+                }
+                return html;
+            }
+
+            // Render the initial lyrics for each song
+
+
+
+            $('.song').each(function () {
+
+                var language = $('.language').val() // Assuming the language identifier is the first character of the lyrics
+
+                // Hide or show buttons based on the language
+                if (language === 'en') {
+                    $(this).find('.transliterate-button, .translate-button').hide();  // Hide transliterate and translate buttons for English songs
+                } else if (language === 'hi') {
+                    // Show all buttons for Hindi songs
+                } else if (language === 'ko') {
+                    $(this).find('.transliterate-button').hide();  // Hide transliterate and translate buttons for English songs
+                } else {
+                    $(this).find('.transliterate-button').hide();
+
+                }
+
+            });
+
+            $('.transliterate-button').click(function () {
+                var songElement = $(this).closest('.song');
+                var songId = songElement.attr('id');
+                var button = $(this); // Assign $(this) to a variable
+            
+                // Check if the button has already been clicked
+                if (button.data('clicked')) {
+                    // Restore the original lyrics
+                    var lyrics = array[songId - 1].song;
+                    var lyricsHTML = generateLyricsHTML(lyrics, songId);
+            
+                    songElement.find('.lyrics-container' + songId).html(lyricsHTML);
+                    button.data('clicked', false);
+                } else {
+                    // Call Flask endpoint for transliterating the song
+                    var lyrics = array[songId - 1].song;
+                    var lyricsJSON = JSON.stringify(lyrics);
+            
+                    $.ajax({
+                        url: '/language_manipulation/transliterate',
+                        type: 'POST',
+                        data: { lyrics: lyricsJSON },
+                        success: function (response) {
+                            // Update the lyrics with the transliterated version
+                            var lyrics = response;
+                            var lyricsHTML = generateLyricsHTML(lyrics, songId);
+            
+                            songElement.find('.lyrics-container' + songId).html(lyricsHTML);
+            
+                            // Mark the button as clicked
+                            button.data('clicked', true);
+                        }
+                    });
+                }
+            });
+            
+            $('.translate-button').click(function () {
+                var songElement = $(this).closest('.song');
+                var songId = songElement.attr('id');
+                var button = $(this); // Assign $(this) to a variable
+            
+                // Check if the button has already been clicked
+                if (button.data('clicked')) {
+                    // Restore the original lyrics
+                    var lyrics = array[songId - 1].song;
+                    var lyricsHTML = generateLyricsHTML(lyrics, songId);
+            
+                    songElement.find('.lyrics-container'+songId).html(lyricsHTML);
+                    button.data('clicked', false);
+                } else {
+                    // Call Flask endpoint for translating the song
+                    var lyrics = array[songId - 1].song;
+                    var lyricsJSON = JSON.stringify(lyrics);
+                    var language = array[songId - 1].language;
+            
+                    $.ajax({
+                        url: '/language_manipulation/translate',
+                        type: 'POST',
+                        data: { language: language, lyrics: lyricsJSON },
+                        success: function (response) {
+                            // Update the lyrics with the translated version
+                            var lyrics = response;
+                            var lyricsHTML = generateLyricsHTML(lyrics, songId);
+                            alert(lyricsHTML)
+            
+                            songElement.find('.lyrics-container'+songId).html(lyricsHTML);
+            
+                            // Mark the button as clicked
+                            button.data('clicked', true);
+                        }
+                    });
+                }
+            });
+            
+            $('.generate-button').click(function () {
+                var songElement = $(this).closest('.song');
+                var songId = songElement.attr('id');
+                var title = array[songId - 1].title;
+                var singer = array[songId - 1].singer;
+                 showSpinner();
+            
+                $.ajax({
+                    url: '/song/generate_p_song',
+                    type: 'POST',
+                    data: { title: title, singer: singer },
+                    success: function (response) {
+                        alert(response);
+                        var lyrics = [
+  ['Verse 1 Line 1', 'Verse 1 Line 2', 'Verse 1 Line 3'],
+  ['Chorus Line 1', 'Chorus Line 2'],
+  ['Verse 2 Line 1', 'Verse 2 Line 2', 'Verse 2 Line 3'],
+  ['Chorus Line 1', 'Chorus Line 2', 'Chorus Line 3'],
+  ['Bridge Line 1', 'Bridge Line 2'],
+  ['Chorus Line 1', 'Chorus Line 2', 'Chorus Line 3']
+];
+
+                        response_array=JSON.parse(response);
+                        //<!-- var response_array = JSON.parse(response); -->
+                        // Update the lyrics with the transliterated version
+                        array[songId - 1].song = response_array;
+                        $('.song_json').val(JSON.stringify(array));
+                        hideSpinner();
+            
+                        var lyricsHTML = generateLyricsHTML(resonse_array);
+            
+                        songElement.find('.lyrics-container'+ (songId-1)).html(lyricsHTML);
+            
+                        // Mark the button as clicked
+            
+                    }.bind(this) // Bind the success callback function to maintain the correct context of 'this'
+                });
+            });
+            
+
+        });
+    </script>
+
+
+</body>
+
+</html>

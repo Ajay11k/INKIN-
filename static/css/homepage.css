@@ -1,0 +1,143 @@
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+
+    to {
+      opacity: 1;
+    }
+  }
+
+  /* Apply the animation to the h2 element */
+  h2 {
+    animation-name: fadeIn;
+    animation-duration: 5s;
+  }
+
+  /* Define the animation */
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+    }
+
+    50% {
+      transform: scale(1.1);
+    }
+
+    100% {
+      transform: scale(1);
+    }
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #000;
+  }
+
+  nav {
+    background-color: #000;
+    color: #fff;
+  }
+
+  .navbar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .navbar li {
+    display: inline-block;
+    margin-right: 10px;
+  }
+
+  .navbar li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    background-color: #2e2c2c;
+    ;
+  }
+
+  .navbar li a:hover {
+    background-color: #555;
+  }
+
+  .tab-content {
+    display: none;
+    padding: 20px;
+    min-height: 100vh;
+    text-align: center;
+    color:white;
+  }
+
+  .active {
+    display: block;
+  }
+
+  .upper {
+    position: relative;
+
+    background-color: #372502;
+    /* Adjust container width as needed */
+    width: 100%;
+    height: 50vh;
+    /* Adjust container height as needed */
+    background-image: url(/static/Images/sheet-music-song-lyrics-headphones-music-ss-1920-800x450.jpg);
+    /* Replace with the path to your image */
+    background-size: cover;
+    background-position: center;
+  }
+
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(28, 22, 11, 0.8);
+    /* Adjust the opacity (0.5 represents 50% transparency) */
+  }
+
+
+  .lower {
+    padding: 20px;
+    background-color: rgb(105, 81, 61);
+  }
+
+  .buttons {
+    background-color: #120a00;
+    color: white;
+
+    width: 300px;
+    padding: 10px;
+    font-size: 26px;
+    cursor: pointer;
+    border: 4px solid rgb(127, 87, 17);
+    border-radius: 100px;
+    height: 200px;
+    margin-left: 40px;
+    animation-name: pulse;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+
+
+  }
+
+  .button-formatting {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  }
+
+
+  h2 {
+    font-size: 40px;
+  }
+
+  p {
+    font-size: 20px;
+    font-style: normal;
+  }

@@ -1,0 +1,1 @@
+from myproject.app import app, mail

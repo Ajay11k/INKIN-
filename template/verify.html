@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Email Verification</title>
+</head>
+
+<style>
+    body{
+        display:flex;
+        background-color: rgb(38, 27, 3);
+        justify-content: center;
+        text-align: center;
+        text-shadow: #82560b;
+        color:white;
+    }
+   
+    .container{
+        border: 4px solid rgb(169, 131, 7);
+        border-radius: 40px;
+        padding:30px;
+        background-color: rgb(0, 0, 0);
+        color: white;
+        min-width:40vw;
+        align-items: center;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 30px;
+        font-size: 20px;
+        
+    }
+    input{
+        width: 300px;
+        height: 40px;
+    }
+   input{
+        height: 40px;
+        width: 400px;
+        background-color: #8888;
+        border-radius: 30px;
+        border-color: #000;
+        font-size: 20px;
+      }
+      button {
+        margin-top: 30px;
+        height: 40px;
+        width: 85px;
+        background-color: #000000;
+       
+        border-color: #82560b;
+        color: rgb(255, 255, 255);
+        font-weight: bolder;
+        cursor: pointer;
+        font-size: 16px;
+  
+      }
+
+</style>
+<body>
+    <div class="overlay"></div>
+    <div class="container">
+    <h1>Email Verification</h1>
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+    <div class="alert alert-info">
+        {% for message in messages %}
+        {{ message }}
+        {% endfor %}
+    </div>
+    {% endif %}
+    {% endwith %}
+    <form action="/verify" method="POST">
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required value= "{{ user_email }}" readonly><br>
+
+        <label for="otp">OTP:</label>
+        <input type="text" id="otp" name="otp" required><br>
+
+        <button type="submit">Verify</button>
+    </form>
+    
+</div>
+<script>
+    const otpInput = document.getElementById('otp');
+    const verifyBtn = document.getElementById('verify-btn');
+
+    otpInput.addEventListener('input', function() {
+        if (otpInput.value.trim() === '') {
+            verifyBtn.disabled = true;
+        } else {
+            verifyBtn.disabled = false;
+        }
+    });
+   
+</script>
+</body>
+</html>

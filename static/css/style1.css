@@ -1,0 +1,212 @@
+
+.upper {
+  position: relative;
+  
+  background-color: #372502;
+  /* Adjust container width as needed */
+  width:100%;
+  height: 50vh; /* Adjust container height as needed */
+  background-image: url(/static/Images/sheet-music-song-lyrics-headphones-music-ss-1920-800x450.jpg); /* Replace with the path to your image */
+  background-size: cover;
+  background-position: center;
+}
+.footer{
+  width:100%;
+  height:40vh;
+  background-color:#E9DBBD;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(28, 22, 11, 0.8); /* Adjust the opacity (0.5 represents 50% transparency) */
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color:#13110d;
+    height:80vh;
+    padding:20px;
+  
+  }
+  
+  .back,
+  .next {
+    background: none;
+    border: none;
+    font-size: 16px;
+    color: #000;
+    cursor: pointer;
+    background-color:rgb(108, 77, 23);
+    /* margin:20px; */
+    border: 2px solid #faf9f7;
+  }
+  #download{
+    background-color: #000;
+    color:white;
+  width:100px; 
+  padding:10px; 
+font-size: 16px;
+cursor: pointer;
+border:4px solid rgb(127, 87, 17) ;
+border-radius: 10px;
+display: none;
+
+  }
+  #download:hover {
+    background-color: #333; /* Change the background color on hover */
+    border-color: #555; /* Change the border color on hover */
+  }
+  
+  .slider-container {
+    
+   
+    
+    /* background-color: crimson; */
+    display: flex;
+    align-items: center;
+    /* padding:20px; */
+    flex: 1 1 auto;
+    height:70%;
+    margin-left: 20px;
+    margin-right: 20px;
+   
+    overflow: hidden;
+    
+    
+  }
+
+  
+  .slider-track {
+   
+   
+    display: flex;
+    transition: transform 0.3s ease;
+    height:100%
+  }
+  
+  .slider-slide {
+    
+    
+    
+    flex: 0 0 33.33%;
+    padding: 20px 10px;
+    height:100%
+  }
+  
+  .card {
+    position:relative;
+    background-color:#503f1e ;
+    border: 1px solid #ccc;
+    padding: 20px;
+    text-align: center;
+    height:75%;
+    width:auto;
+    display:flex;
+    flex-direction: column;
+    transition: transform 0.3s ease;
+  }
+
+
+  .card:hover {
+    transform: scale(0.8);
+  }
+
+  .overlay2 {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 1;
+  }
+  .card:hover .overlay2 {
+    opacity: 1;
+  }
+  .image-content, 
+.card-content{
+
+    align-items: center;
+     padding: 5px 5px 0px 5px; 
+
+}
+
+.image-content{
+    /* row-gap:5px; */
+    height:75%;
+    background-color: rgb(3, 3, 3);
+    border-radius: 5px solid black;
+    
+}
+.card-content{
+    height:25%;
+    background-color: #372502;
+}
+.card-image{
+    position: relative;
+    
+    height: 98%;
+    width: 100%;
+    background-color: rgb(3, 3, 3);
+    
+}
+
+.card-image .card-img{
+    height:100%;
+    width:100%;
+    object-fit: fill;
+    /* border:4px solid #2b2be0 */
+}
+
+.name{
+    font-size: 18px;
+    font-weight: 500;
+    color: rgb(241, 143, 15);
+
+}
+
+.description{
+    font-size: 18px;
+    color: chocolate;
+    text-align: center;
+}
+
+.poetry-image{
+    
+    padding:100px;
+    min-height:500px;
+    background-color: #CBB682;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+}
+.poetry-image-holder{
+    /* position: relative;
+   
+    height:auto;
+    min-width: fit-content; */
+    max-width: 100%;
+    position: relative;
+    margin-top: 20px;
+    /* padding:20px; */
+}
+.poetry-image-holder .gen-image{
+    height:auto;
+    
+    max-width: 70%;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+    object-fit: contain;
+
+}

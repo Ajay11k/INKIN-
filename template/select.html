@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.13.0/themes/smoothness/jquery-ui.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function () {
+            $("#generateButton").click(function () {
+                var selection = $("input[name='selection']:checked").val();
+                if (selection === "poetry") {
+                    window.location.href = "/poetry/poetry";
+                } else if (selection === "song") {
+                    window.location.href = "/song/song";
+                }
+            });
+
+            $("#selection").buttonset();
+        });
+    </script>
+    <style>
+        .ui-buttonset {
+            display: inline-block;
+        }
+
+        .ui-buttonset .ui-button {
+            margin: 0 !important;
+            border-radius: 0 !important;
+            border-right-width: 0 !important;
+        }
+
+        .ui-buttonset .ui-button:last-child {
+            border-right-width: 1px !important;
+        }
+
+        .upper {
+            position: relative;
+
+            background-color: #372502;
+            /* Adjust container width as needed */
+            width: 100%;
+            height: 50vh;
+            /* Adjust container height as needed */
+            background-image: url(/static/Images/sheet-music-song-lyrics-headphones-music-ss-1920-800x450.jpg);
+            /* Replace with the path to your image */
+            background-size: cover;
+            background-position: center;
+        }
+
+
+        #selection {
+            padding: 50px 20px;
+            display: flex;
+
+            width: 97%;
+            height: 50vh;
+            align-items: center;
+            justify-content: space-between;
+
+            background-color: #000;
+        }
+
+        .lower {
+            padding: 20px;
+            background-color: rgb(105, 81, 61);
+        }
+
+        .middle {
+            display: flex;
+            background-color: #362502;
+            padding: 20px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .r {
+            position: relative;
+            overflow: hidden;
+            display: inline-block;
+            transition: transform 0.3s;
+        }
+
+        .r img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .r::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .r:hover {
+            transform: scale(0.9);
+        }
+
+        .r:hover::before {
+            opacity: 1;
+        }
+
+        #generateButton {
+            background-color: #000;
+            color: white;
+            width: 160px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 4px solid rgb(127, 87, 17);
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(28, 22, 11, 0.8);
+            /* Adjust the opacity (0.5 represents 50% transparency) */
+        }
+
+        .r {
+            background-color: #000;
+
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="upper">
+
+        <div class="overlay"></div>
+    </div>
+
+    <div id="selection">
+        <div class="r">
+            <input type="radio" id="poetryRadio" name="selection" value="poetry">
+            <label for="poetryRadio">POEM<img src="/static/Images/poem111.jpeg" alt="Poetry"
+                    style="height:300px;width:300px;"></label>
+        </div>
+        <div class="r">
+            <input type="radio" id="songRadio" name="selection" value="song">
+            <label for="songRadio">SONG<img src="/static/Images/song111.jpeg" alt="Song"
+                    style="height:300px;width:300px;"></label>
+        </div>
+
+    </div>
+    <div class="middle"><button id="generateButton">Generate</button></div>
+
+
+    <div class="lower">
+        <h2>inkin':</h2>
+        <p>
+            inkin' is a creative platform that allows you to generate unique songs and poems
+            based on your preferences. Whether you're looking for inspiration, want to explore your artistic side,
+            or simply enjoy the beauty of words, this generator has something for you.
+        </p>
+        <p>
+            With just a click of a button, you can unleash your creativity and discover new verses that
+            resonate with your emotions. Choose between generating a banging song or a heartfelt poem, and let the
+            magic of words unfold.
+        </p>
+        <p>
+            Get ready to embark on a poetic journey and express yourself in ways you never imagined. Let inkin' be your
+            companion in creating meaningful and memorable artistic pieces.
+
+        </p>
+    </div>
+</body>
+
+</html>

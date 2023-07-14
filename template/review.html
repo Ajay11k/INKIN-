@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Browser</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: black;
+        }
+
+        .parent {
+            margin: 20px 50px;
+
+            height: auto;
+
+            padding: 10px 40px;
+            /* Fixed height of the parent div */
+            overflow-y: auto;
+            /* Add vertical scrollbar when content overflows */
+        }
+
+        .section {
+            min-height: 60px;
+            /* Minimum height for each section */
+
+            padding: 5px;
+            background-color: #69513d;
+            margin-bottom: 10px;
+            border-radius: 10px;
+        }
+
+        .section {
+            /* Fixed width of the container div */
+            word-wrap: break-word;
+            /* Wrap long lines of text */
+        }
+
+        .inside {
+            height: 5vh;
+
+            display: flex;
+            padding: 0px 10px;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .buttons {
+            margin: 20px 50px;
+            display: flex;
+            justify-content: space-between;
+
+
+        }
+
+        .pn {
+            background-color: #000;
+            color: white;
+            width: 160px;
+            padding: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            border: 4px solid rgb(127, 87, 17);
+            border-radius: 10px;
+        }
+
+        .comment {
+
+            height: 40vh;
+            padding: 20px 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            justify-content: space-around;
+            background-color: #69513d;
+            border-radius: 29px;
+            border-color: black;
+            border-style: groove;
+        }
+
+        .header {
+            position: relative;
+
+            background-color: #372502;
+            /* Adjust container width as needed */
+            width: 100%;
+            height: 50vh;
+            /* Adjust container height as needed */
+            background-image: url(/static/Images/sheet-music-song-lyrics-headphones-music-ss-1920-800x450.jpg);
+            /* Replace with the path to your image */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(28, 22, 11, 0.8);
+            /* Adjust the opacity (0.5 represents 50% transparency) */
+        }
+
+        p {
+            font-size: 16px;
+
+        }
+
+        #reviewcomment {
+            background-color: #c7ae7018;
+            border: #0e0e0e;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <div class="overlay"></div>
+
+
+
+    </div>
+    <div class="parent">
+        <div class="section">
+            <div class="inside">
+                <h3 class="name">hh</h3>
+                <h3 class="timestamp"></h3>
+            </div>
+            <div class="review">
+                <p class="paragraph"></p>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <div class="inside">
+                <h3 class="name">h</h3>
+                <h3 class="timestamp"></h3>
+            </div>
+            <div class="review">
+                <p class="paragraph"></p>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <div class="inside">
+                <h3 class="name"></h3>
+                <h3 class="timestamp"></h3>
+            </div>
+            <div class="review">
+                <p class="paragraph"></p>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <div class="inside">
+                <h3 class="name">h</h3>
+                <h3 class="timestamp"></h3>
+            </div>
+            <div class="review">
+                <p class="paragraph"></p>
+            </div>
+
+        </div>
+
+        <div class="section">
+            <div class="inside">
+                <h3 class="name"></h3>
+                <h3 class="timestamp"></h3>
+            </div>
+            <div class="review">
+                <p class="paragraph"></p>
+            </div>
+
+        </div>
+    </div>
+
+
+
+
+    <div class="buttons">
+        <button class="pn" id="back">previous</button>
+        <button class="pn" id="next">next</button>
+    </div>
+    <div class="comment">
+        <label for="reviewcomment">Please provide us with your feedback:</label>
+
+        <textarea name="reviewcomment" id="reviewcomment" cols="100" rows="10"></textarea>
+        <button class="pn" id="submit">Add </button>
+
+
+
+    </div>
+    <script src="/static/js/review.js"></script>
+</body>
+
+</html>

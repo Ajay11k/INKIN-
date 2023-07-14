@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+
+    <html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="/static/css/song.css">
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    </head>
+<body class="container">
+    <nav class="navbar">
+        <div class="navbar-left">
+            <img class="navbar-logo" src="/static/pngwing.com (8).png" alt="logo">
+
+        </div>
+        <div class="navbar-right">
+            <form action="/poetry/regenerate_poetry" method="POST">
+                <input type="hidden" name="data" value="{{ poetry_json }}">
+                <button type="submit" class="navbar-button">Regenerate</button>
+            </form>
+            <form action="/poetry/save" method="POST">
+                
+                <input type="hidden" name="data" value="{{ poetry_json }}">
+                <input type="hidden" name="num_songs" value="1">
+                <input type="hidden" name="genre" value="poetry">
+                <button {% if flag %}disabled{% endif %} type="submit" class="navbar-button">Save</button>
+            </form>
+            <form action="/poetry/download_poetry" method="POST">
+                
+                <input type="hidden" name="data" value="{{ poetry_json }}">
+                <button type="submit" class="navbar-button">Download</button>
+            </form>
+        </div>
+    </nav>
+  <input type="hidden" class="poetry_json" value="{{ poetry_json }}">
+  <input type="hidden" class="language" value="{{ poetry[0].language}}">
+  <div class="upper">
+        
+    <img src="/static/black_gold.jpg" class="cover-image" alt="Image">
+  
+<!-- <div class="overlay"></div> -->
+</div>
+  <div class="poem" >
+    <div class="lyrics-container lyrics"></div>
+    <br>
+    <div class="allbutton">
+    <button class="transliterate-button navbar-button bn">Transliterate</button>
+    <button class="translate-button navbar-button bn">Translate</button>
+    <form action="/poetry/show_image" method="GET">
+                <input type="hidden" name="data" value="{{ poetry_json }}">
+                <button type="submit" class="navbar-button bn">show_image</button>
+    </form>
+    <button id="audioButton" class="navbar-button bn" onclick="playAudio()">Play Audio</button>
+    </div>
+  
+    <br>
+    <button id="pauseButton"  class="navbar-button " onclick="pauseAudio()" style="display: none;">Stop</button>
+    
+</div>
+
+<!-- Add other songs if needed -->
+
+<script>
+    
+
+    $(document).ready(function() {
+       array=JSON.parse($('.poetry_json').val());
+      
+       $("#audioButton").click(function() {
+       
+        var lines = array[0].poetrylines;
+        var language=array[0].language
+        $.ajax({
+          url: "/poetry/play_audio",
+          type: "POST",
+          contentType: "application/json",
+          data: JSON.stringify({ lines: lines, language: language }),
+          success: function(data) {
+            audio = new Audio(data.audio_path);
+            audio.play();
+
+            $("#playButton").hide();
+            $("#pauseButton").show();
+          }
+        });
+      });
+
+      $("#pauseButton").click(function() {
+        audio.pause();
+      });
+
+
+        // Function to generate the lyrics HTML
+        function generateLyricsHTML(lyrics) {
+            var html = '';
+            html+='<h2>'+array[0].title+'</h2>';
+            for (var i = 0; i < lyrics.length; i++) {
+                for (var j = 0; j < lyrics[i].length; j++) {
+                    html += '<p>' + lyrics[i][j] + '</p>';
+                }
+            }
+            return html;
+        }
+
+        // Render the initial lyrics for each song
+       
+            <!-- var songId = array[0].id; -->
+            var lyrics = array[0].poetrylines;
+            var lyricsHTML = generateLyricsHTML(lyrics);
+            $(' .lyrics-container').html(lyricsHTML);
+
+            $('.poem').each(function () {
+                
+                var language = $('.language').val() // Assuming the language identifier is the first character of the lyrics
+
+                // Hide or show buttons based on the language
+                if (language === 'en') {
+                    $(this).find('.transliterate-button, .translate-button').hide();  // Hide transliterate and translate buttons for English songs
+                } else if (language === 'hi') {
+                    // Show all buttons for Hindi songs
+                }
+            });
+       
+
+        $('.transliterate-button').click(function () {
+            var songElement = $(this).closest('.poem');
+           // var songId = songElement.attr('id');
+
+            // Check if the button has already been clicked
+            if ($(this).data('clicked')) {
+                // Restore the original lyrics
+                var lyrics = array[0].poetrylines;
+                var lyricsHTML = generateLyricsHTML(lyrics);
+                
+                songElement.find('.lyrics-container').html(lyricsHTML);
+                $(this).data('clicked', false);
+            } else {
+                // Call Flask endpoint for transliterating the song
+                var lyrics = array[0].poetrylines;
+                var lyricsJSON = JSON.stringify(lyrics);
+                
+                $.ajax({
+                    url: '/language_manipulation/transliterate',
+                    type: 'POST',
+                    data: {lyrics: lyricsJSON},
+                    success: function (response) {
+                        // Update the lyrics with the transliterated version
+                        
+
+                        
+                        var lyricsHTML = generateLyricsHTML(response);
+                
+                        songElement.find('.lyrics-container').html(lyricsHTML);
+
+                        
+                        // Mark the button as clicked
+                        $(this).data('clicked', true);
+
+                    }.bind(this) // Bind the success callback function to maintain the correct context of 'this'
+                });
+            }
+        });
+        $('.translate-button').click(function () {
+            var songElement = $(this).closest('.poem');
+           // var songId = songElement.attr('id');
+
+            // Check if the button has already been clicked
+            if ($(this).data('clicked')) {
+                // Restore the original lyrics
+                var lyrics = array[0].poetrylines;
+                var lyricsHTML = generateLyricsHTML(lyrics);
+                
+                songElement.find('.lyrics-container').html(lyricsHTML);
+                $(this).data('clicked', false);
+            } else {
+                // Call Flask endpoint for transliterating the song
+                var lyrics = array[0].poetrylines;
+                var language=array[0].language;
+
+                var lyricsJSON = JSON.stringify(lyrics);
+                
+                $.ajax({
+                    url: '/language_manipulation/translate',
+                    type: 'POST',
+                    data: {language:language,lyrics: lyricsJSON},
+                    success: function (response) {
+                        // Update the lyrics with the transliterated version
+                        
+                        
+                        var lyricsHTML = generateLyricsHTML(response);
+                
+                songElement.find('.lyrics-container').html(lyricsHTML);
+
+                        
+                        // Mark the button as clicked
+                        $(this).data('clicked', true);
+                    }.bind(this) // Bind the success callback function to maintain the correct context of 'this'
+                });
+            }
+        });
+    });
+</script>
+
+    
+</body>
+</html>
